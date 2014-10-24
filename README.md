@@ -37,6 +37,17 @@ angular.module('MyApp', ['nouislider']);
 <div slider ng-from="test.from" ng-to="test.to" start=0 end=100 step=5 callback='set'></div>
 ```
 
+- You can also atach custom event handlers
+
+```html
+<div slider ng-model="test.single" start=1 end=10 set='sethandler(event, value)'></div>
+<div slider ng-from="test.from" ng-to="test.to" start=0 end=100 step=5 callback='set' change='changehandler(event, value)'></div>
+<div slider ng-model="test.single" start=1 end=10 slide='slidehandler(event, value)'></div>
+```
+
+- To change the orientation use `orientation` attribute
+- To use `connect` prop there is attribute too
+
 That's it!
 
 ### Screenshot:

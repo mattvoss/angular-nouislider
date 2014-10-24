@@ -9,25 +9,35 @@ angular.module('nouislider', []).directive('slider', function () {
       connect: '@',
       orientation: '@',
       callback: '@',
+      slide: '&',
+      set: '&',
+      change: '&',
       margin: '@',
       ngModel: '=',
       ngFrom: '=',
       ngTo: '='
     },
     link: function (scope, element, attrs) {
-      var callback, fromParsed, parsedValue, slider, toParsed;
+      var callback, change, connect, fromParsed, parsedValue, set, slide, slider, toParsed;
       slider = $(element);
       callback = scope.callback ? scope.callback : 'slide';
+      slide = scope.slide ? scope.slide : function () {
+      };
+      set = scope.set ? scope.set : function () {
+      };
+      change = scope.change ? scope.change : function () {
+      };
       if (scope.ngFrom != null && scope.ngTo != null) {
         fromParsed = null;
         toParsed = null;
+        connect = scope.connect === true;
         slider.noUiSlider({
           start: [
             scope.ngFrom || scope.start,
             scope.ngTo || scope.end
           ],
           step: parseFloat(scope.step || 1),
-          connect: scope.connect || true,
+          connect: connect,
           margin: parseFloat(scope.margin || 0),
           orientation: scope.orientation || 'horizontal',
           range: {
@@ -53,7 +63,7 @@ angular.module('nouislider', []).directive('slider', function () {
             ]);
           }
         });
-        return scope.$watch('ngTo', function (newVal, oldVal) {
+        scope.$watch('ngTo', function (newVal, oldVal) {
           if (newVal !== toParsed) {
             return slider.val([
               null,
@@ -63,9 +73,15 @@ angular.module('nouislider', []).directive('slider', function () {
         });
       } else {
         parsedValue = null;
+        connect = false;
+        if (scope.connect === 'lower' || scope.connect === 'upper') {
+          connect = scope.connect;
+        }
         slider.noUiSlider({
           start: [scope.ngModel || scope.start],
           step: parseFloat(scope.step || 1),
+          connect: connect,
+          orientation: scope.orientation || 'horizontal',
           range: {
             min: [parseFloat(scope.start)],
             max: [parseFloat(scope.end)]
@@ -77,12 +93,21 @@ angular.module('nouislider', []).directive('slider', function () {
             return scope.ngModel = parsedValue;
           });
         });
-        return scope.$watch('ngModel', function (newVal, oldVal) {
+        scope.$watch('ngModel', function (newVal, oldVal) {
           if (newVal !== parsedValue) {
             return slider.val(newVal);
           }
         });
       }
+      slider.on('set', function (event, value) {
+        return set(event, value);
+      });
+      slider.on('slide', function (event, value) {
+        return slide(event, value);
+      });
+      slider.on('change', function (event, value) {
+        return change(event, value);
+      });
     }
   };
 });  /*

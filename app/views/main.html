@@ -15,4 +15,19 @@
   <div slider ng-model="test.live" start=1 end=10></div>
   <p>Binded data: <span ng-bind="test.live"></span></p>
   <p>Data: <input type="number" ng-model="test.live"></p>
+
+  <h4 ng-init="test.orientation = 2">Orientation example:</h4>
+  <div style="height: 200px;" slider ng-model="test.orientation" start=1 end=10 orientation="vertical"></div>
+  <p>Binded data: <span ng-bind="test.orientation"></span></p>
+  <p>Data: <input type="number" ng-model="test.orientation"></p>
+
+  <h4 ng-init="test.connectlower = 2">Connect lower example:</h4>
+  <div class="orientation-example" slider ng-model="test.connectlower" start=1 end=10 connect="lower"></div>
+  <p>Binded data: <span ng-bind="test.connectlower"></span></p>
+  <p>Data: <input type="number" ng-model="test.connectlower"></p>
+
+  <h4 ng-init="test.connectupper = 2">Connect upper example:</h4>
+  <div class="orientation-example" slider ng-model="test.connectupper" start=1 end=10 connect="upper"></div>
+  <p>Binded data: <span ng-bind="test.connectupper"></span></p>
+  <p>Data: <input type="number" ng-model="test.connectupper"></p>
 </div>
