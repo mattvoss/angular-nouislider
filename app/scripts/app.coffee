@@ -10,9 +10,9 @@ angular.module('nouislider', [])
       connect: "@"
       orientation: "@"
       callback: "@"
-      slide: "&"
-      set: "&"
-      change: "&"
+      slide: "&slide"
+      set: "&set"
+      change: "&change"
       margin: "@"
       ngModel: "="
       ngFrom: "="
@@ -88,9 +88,18 @@ angular.module('nouislider', [])
             slider.val(newVal)
         )
       slider.on 'set', (event, value) ->
-        set event, value
+        set
+          event: event
+          value: value
+        return
       slider.on 'slide', (event, value) ->
-        slide event, value
+        slide
+          event: event
+          value: value
+        return
       slider.on 'change', (event, value) ->
-        change event, value
+        change
+          event: event
+          value: value
+        return
       return

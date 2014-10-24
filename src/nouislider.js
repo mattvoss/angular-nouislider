@@ -9,9 +9,9 @@ angular.module('nouislider', []).directive('slider', function () {
       connect: '@',
       orientation: '@',
       callback: '@',
-      slide: '&',
-      set: '&',
-      change: '&',
+      slide: '&slide',
+      set: '&set',
+      change: '&change',
       margin: '@',
       ngModel: '=',
       ngFrom: '=',
@@ -100,13 +100,22 @@ angular.module('nouislider', []).directive('slider', function () {
         });
       }
       slider.on('set', function (event, value) {
-        return set(event, value);
+        set({
+          event: event,
+          value: value
+        });
       });
       slider.on('slide', function (event, value) {
-        return slide(event, value);
+        slide({
+          event: event,
+          value: value
+        });
       });
       slider.on('change', function (event, value) {
-        return change(event, value);
+        change({
+          event: event,
+          value: value
+        });
       });
     }
   };
