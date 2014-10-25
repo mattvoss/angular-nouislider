@@ -112,7 +112,7 @@ angular.module('nouislider', [])
           true
         return
       )
-      scope.$watch('ngMin', (newVal, oldVal) ->
+      scope.$watch('ngMax', (newVal, oldVal) ->
         slider.noUiSlider
           range:
             min: [parseFloat(scope.ngMin || scope.min)]

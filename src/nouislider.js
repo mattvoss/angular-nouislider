@@ -127,7 +127,7 @@ angular.module('nouislider', []).directive('slider', function () {
           }
         }, true);
       });
-      scope.$watch('ngMin', function (newVal, oldVal) {
+      scope.$watch('ngMax', function (newVal, oldVal) {
         slider.noUiSlider({
           range: {
             min: [parseFloat(scope.ngMin || scope.min)],
