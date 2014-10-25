@@ -28,7 +28,7 @@ angular.module('nouislider', [])
       slide = if scope.slide then scope.slide else -> return
       set = if scope.set then scope.set else -> return
       change = if scope.change then scope.change else -> return
-      direction = if scope.direction is "rtl" or scope.direction is "ltr" then scope.direction else "rtl"
+      direction = if scope.direction is "rtl" or scope.direction is "ltr" then scope.direction else "ltr"
       orientation = if scope.orientation is "horizontal" or scope.orientation is "vertical" then scope.orientation else "horizontal"
 
       if scope.ngFrom? and scope.ngTo?
