@@ -31,7 +31,7 @@ angular.module('nouislider', []).directive('slider', function () {
       change = scope.change ? scope.change : function () {
       };
       direction = scope.direction === 'rtl' || scope.direction === 'ltr' ? scope.direction : 'rtl';
-      orientation = scope.direction === 'horizontal' || scope.direction === 'vertical' ? scope.direction : 'horizontal';
+      orientation = scope.orientation === 'horizontal' || scope.orientation === 'vertical' ? scope.orientation : 'horizontal';
       if (scope.ngFrom != null && scope.ngTo != null) {
         fromParsed = null;
         toParsed = null;

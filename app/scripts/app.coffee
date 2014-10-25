@@ -29,7 +29,7 @@ angular.module('nouislider', [])
       set = if scope.set then scope.set else -> return
       change = if scope.change then scope.change else -> return
       direction = if scope.direction is "rtl" or scope.direction is "ltr" then scope.direction else "rtl"
-      orientation = if scope.direction is "horizontal" or scope.direction is "vertical" then scope.direction else "horizontal"
+      orientation = if scope.orientation is "horizontal" or scope.orientation is "vertical" then scope.orientation else "horizontal"
 
       if scope.ngFrom? and scope.ngTo?
         fromParsed = null
