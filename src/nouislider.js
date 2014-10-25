@@ -3,9 +3,9 @@ angular.module('nouislider', []).directive('slider', function () {
   return {
     restrict: 'A',
     scope: {
-      start: '@',
+      min: '@',
       step: '@',
-      end: '@',
+      max: '@',
       connect: '@',
       orientation: '@',
       callback: '@',
@@ -15,7 +15,9 @@ angular.module('nouislider', []).directive('slider', function () {
       margin: '@',
       ngModel: '=',
       ngFrom: '=',
-      ngTo: '='
+      ngTo: '=',
+      ngMin: '=',
+      ngMax: '='
     },
     link: function (scope, element, attrs) {
       var callback, change, connect, fromParsed, parsedValue, set, slide, slider, toParsed;
@@ -33,16 +35,16 @@ angular.module('nouislider', []).directive('slider', function () {
         connect = scope.connect === true;
         slider.noUiSlider({
           start: [
-            scope.ngFrom || scope.start,
-            scope.ngTo || scope.end
+            scope.ngFrom || scope.ngMin || scope.min,
+            scope.ngTo || scope.ngMax || scope.max
           ],
           step: parseFloat(scope.step || 1),
           connect: connect,
           margin: parseFloat(scope.margin || 0),
           orientation: scope.orientation || 'horizontal',
           range: {
-            min: [parseFloat(scope.start)],
-            max: [parseFloat(scope.end)]
+            min: [parseFloat(scope.ngMin || scope.min)],
+            max: [parseFloat(scope.ngMax || scope.max)]
           }
         });
         slider.on(callback, function () {
@@ -78,13 +80,13 @@ angular.module('nouislider', []).directive('slider', function () {
           connect = scope.connect;
         }
         slider.noUiSlider({
-          start: [scope.ngModel || scope.start],
+          start: [scope.ngModel || scope.ngMin || scope.min],
           step: parseFloat(scope.step || 1),
           connect: connect,
           orientation: scope.orientation || 'horizontal',
           range: {
-            min: [parseFloat(scope.start)],
-            max: [parseFloat(scope.end)]
+            min: [parseFloat(scope.ngMin || scope.min)],
+            max: [parseFloat(scope.ngMax || scope.max)]
           }
         });
         slider.on(callback, function () {
@@ -116,6 +118,22 @@ angular.module('nouislider', []).directive('slider', function () {
           event: event,
           value: value
         });
+      });
+      scope.$watch('ngMin', function (newVal, oldVal) {
+        slider.noUiSlider({
+          range: {
+            min: [parseFloat(newVal || scope.min)],
+            max: [parseFloat(scope.ngMax || scope.max)]
+          }
+        }, true);
+      });
+      scope.$watch('ngMin', function (newVal, oldVal) {
+        slider.noUiSlider({
+          range: {
+            min: [parseFloat(scope.ngMin || scope.min)],
+            max: [parseFloat(newVal || scope.max)]
+          }
+        }, true);
       });
     }
   };

@@ -4,9 +4,9 @@ angular.module('nouislider', [])
   .directive "slider", () ->
     restrict: "A"
     scope:
-      start: "@"
+      min: "@"
       step: "@"
-      end: "@"
+      max: "@"
       connect: "@"
       orientation: "@"
       callback: "@"
@@ -17,6 +17,8 @@ angular.module('nouislider', [])
       ngModel: "="
       ngFrom: "="
       ngTo: "="
+      ngMin: "="
+      ngMax: "="
 
     link: (scope, element, attrs) ->
       slider = $(element)
@@ -32,14 +34,14 @@ angular.module('nouislider', [])
         connect = scope.connect is true
 
         slider.noUiSlider
-          start: [scope.ngFrom or scope.start, scope.ngTo or scope.end]
+          start: [scope.ngFrom or scope.ngMin or scope.min, scope.ngTo or scope.ngMax or scope.max]
           step: parseFloat(scope.step or 1)
           connect: connect
           margin: parseFloat(scope.margin or 0)
           orientation: scope.orientation || "horizontal"
           range:
-            min: [parseFloat scope.start]
-            max: [parseFloat scope.end]
+            min: [parseFloat scope.ngMin or scope.min]
+            max: [parseFloat scope.ngMax or scope.max]
 
 
         slider.on callback, ->
@@ -70,13 +72,13 @@ angular.module('nouislider', [])
           connect = scope.connect
 
         slider.noUiSlider
-          start: [scope.ngModel or scope.start],
+          start: [scope.ngModel or scope.ngMin or scope.min],
           step: parseFloat(scope.step or 1)
           connect: connect
           orientation: scope.orientation || "horizontal"
           range:
-            min: [parseFloat scope.start]
-            max: [parseFloat scope.end]
+            min: [parseFloat scope.ngMin or scope.min]
+            max: [parseFloat scope.ngMax or scope.max]
 
         slider.on callback, ->
           parsedValue = parseFloat slider.val()
@@ -102,4 +104,20 @@ angular.module('nouislider', [])
           event: event
           value: value
         return
+      scope.$watch('ngMin', (newVal, oldVal) ->
+        slider.noUiSlider
+          range:
+            min: [parseFloat(newVal || scope.min)]
+            max: [parseFloat(scope.ngMax || scope.max)],
+          true
+        return
+      )
+      scope.$watch('ngMin', (newVal, oldVal) ->
+        slider.noUiSlider
+          range:
+            min: [parseFloat(scope.ngMin || scope.min)]
+            max: [parseFloat(newVal || scope.max)],
+          true
+        return
+      )
       return
