@@ -8,6 +8,7 @@ angular.module('nouislider', []).directive('slider', function () {
       max: '@',
       connect: '@',
       orientation: '@',
+      direction: '@',
       callback: '@',
       slide: '&slide',
       set: '&set',
@@ -20,7 +21,7 @@ angular.module('nouislider', []).directive('slider', function () {
       ngMax: '='
     },
     link: function (scope, element, attrs) {
-      var callback, change, connect, fromParsed, parsedValue, set, slide, slider, toParsed;
+      var callback, change, connect, direction, fromParsed, orientation, parsedValue, set, slide, slider, toParsed;
       slider = $(element);
       callback = scope.callback ? scope.callback : 'slide';
       slide = scope.slide ? scope.slide : function () {
@@ -29,6 +30,8 @@ angular.module('nouislider', []).directive('slider', function () {
       };
       change = scope.change ? scope.change : function () {
       };
+      direction = scope.direction === 'rtl' || scope.direction === 'ltr' ? scope.direction : 'rtl';
+      orientation = scope.direction === 'horizontal' || scope.direction === 'vertical' ? scope.direction : 'horizontal';
       if (scope.ngFrom != null && scope.ngTo != null) {
         fromParsed = null;
         toParsed = null;
@@ -41,7 +44,8 @@ angular.module('nouislider', []).directive('slider', function () {
           step: parseFloat(scope.step || 1),
           connect: connect,
           margin: parseFloat(scope.margin || 0),
-          orientation: scope.orientation || 'horizontal',
+          orientation: orientation,
+          direction: direction,
           range: {
             min: [parseFloat(scope.ngMin || scope.min)],
             max: [parseFloat(scope.ngMax || scope.max)]
@@ -83,7 +87,8 @@ angular.module('nouislider', []).directive('slider', function () {
           start: [scope.ngModel || scope.ngMin || scope.min],
           step: parseFloat(scope.step || 1),
           connect: connect,
-          orientation: scope.orientation || 'horizontal',
+          orientation: orientation,
+          direction: direction,
           range: {
             min: [parseFloat(scope.ngMin || scope.min)],
             max: [parseFloat(scope.ngMax || scope.max)]
@@ -137,6 +142,4 @@ angular.module('nouislider', []).directive('slider', function () {
       });
     }
   };
-});  /*
-//@ sourceMappingURL=app.js.map
-*/
+});

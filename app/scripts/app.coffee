@@ -9,6 +9,7 @@ angular.module('nouislider', [])
       max: "@"
       connect: "@"
       orientation: "@"
+      direction: "@"
       callback: "@"
       slide: "&slide"
       set: "&set"
@@ -27,6 +28,8 @@ angular.module('nouislider', [])
       slide = if scope.slide then scope.slide else -> return
       set = if scope.set then scope.set else -> return
       change = if scope.change then scope.change else -> return
+      direction = if scope.direction is "rtl" or scope.direction is "ltr" then scope.direction else "rtl"
+      orientation = if scope.direction is "horizontal" or scope.direction is "vertical" then scope.direction else "horizontal"
 
       if scope.ngFrom? and scope.ngTo?
         fromParsed = null
@@ -38,7 +41,8 @@ angular.module('nouislider', [])
           step: parseFloat(scope.step or 1)
           connect: connect
           margin: parseFloat(scope.margin or 0)
-          orientation: scope.orientation || "horizontal"
+          orientation: orientation
+          direction: direction
           range:
             min: [parseFloat scope.ngMin or scope.min]
             max: [parseFloat scope.ngMax or scope.max]
@@ -75,7 +79,8 @@ angular.module('nouislider', [])
           start: [scope.ngModel or scope.ngMin or scope.min],
           step: parseFloat(scope.step or 1)
           connect: connect
-          orientation: scope.orientation || "horizontal"
+          orientation: orientation
+          direction: direction
           range:
             min: [parseFloat scope.ngMin or scope.min]
             max: [parseFloat scope.ngMax or scope.max]

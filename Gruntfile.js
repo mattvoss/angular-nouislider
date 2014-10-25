@@ -142,7 +142,7 @@ module.exports = function (grunt) {
     // Compiles CoffeeScript to JavaScript
     coffee: {
       options: {
-        sourceMap: true,
+        sourceMap: false,
         sourceRoot: '',
         bare: true
       },
