@@ -32,7 +32,7 @@ angular.module('nouislider', []).directive('slider', function () {
       if (scope.ngFrom != null && scope.ngTo != null) {
         fromParsed = null;
         toParsed = null;
-        connect = scope.connect === true;
+        connect = scope.connect === 'true';
         slider.noUiSlider({
           start: [
             scope.ngFrom || scope.ngMin || scope.min,
